@@ -97,6 +97,8 @@ else:
  
 fig, ax1 = plt.subplots(1, 1)
 
+fig.set_size_inches(8, 4)
+
 if AverageDatainTriplicates == True:
     evenly_spaced_interval = np.linspace(0, 1, t-1)
     colors = [plt.cm.viridis(x) for x in evenly_spaced_interval]
