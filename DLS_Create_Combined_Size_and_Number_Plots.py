@@ -4,9 +4,8 @@ Created on Mon Aug 30 23:26:44 2021
 
 @author: Alison Lui
 
-Read an excel file of data from the Landry DLS machine including both Number
-and Size data. For each triplicated experiment, average the data and plot
-Number and Size percentages on semilogx plots side-by-side.
+Read an excel file of data from the Landry DLS machine including both Number and Size data in two different sheets. For each triplicated experiment, average the data and plot
+Number and Size percentages on semilogx plots side-by-side. Save plots as png files.
 """
 
 
