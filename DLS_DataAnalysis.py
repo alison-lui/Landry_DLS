@@ -11,10 +11,9 @@ You must specify if you're plotting either DLS data taken by Size or by Number.
 
 """ Start by changing the following parameters """
 
-workingdir = r"D:\Documents\Research"
-fname = r"D:\Documents\Research\20210826_liposome_dataexport_fixed.xlsx"
-sheetname = r"Chris-Sizes"
-SizeDataorNumberData = "Size" # Sets y-label. Write "Size" or "Number"
+workingdir = r"C:\Users\Darwin\Documents\Alison\AL Data\B2P41"
+fname = r"C:\Users\Darwin\Documents\Alison\AL Data\B2P41\20210901_Liposomesfrom345_Combined.xlsx"
+sheetname = r"Sheet1"
 AverageDatainTriplicates = True
 
 #####################################################
@@ -35,99 +34,154 @@ temp = np.shape(data)
 H = temp[0]
 L = temp[1]
 
-xmin = 1
-xmax = int((L-1)/2)
+new_L = 70
+
+imin = 1
+imax = new_L
+
+smin = imin + new_L
+smax = imax + new_L
+
+nmin = smin + new_L
+nmax = smax + new_L
+
+diff = nmax + 1
 
 ymin = 0
 ymax = H-1
 
 Headers = data[:,0]
-Ydata = data[:,xmin:xmax]
-Xdata = data[:,xmin+xmax:xmax+xmax]
+Intensities = data[:,imin:imax]
+Sizes = data[:,smin:smax]
+Numbers = data[:,nmin:nmax]
 
-if SizeDataorNumberData == "Size":
-    yl = "Percent by Size"
-    ender = "_Size"
-else:
-    yl = "Percent by Number"
-    ender = "_Number"
 
 """ Is the data in triplicates and should we average it? """
 
 if AverageDatainTriplicates == True:
-    t = int(H/3) # number of datasets to average
+    t = int(H/3) # number of datasets to average (1/3 of total rows in dataset)
 
     # data goes here
-    xavgs = []
-    yavgs = []
+    iavgs = []
+    savgs = []
+    navgs = []
     Havgs = []
 
-    for x in range(0,t-1):
+    
+    for x in range(0,t):
+    
+        # average data
+        
         r = int(x*3)
-        xavgs = np.append(xavgs, np.mean(Xdata[r:r+3,:],0)).reshape((x+1,xmax-1))
-        yavgs = np.append(yavgs, np.mean(Ydata[r:r+3,:],0)).reshape((x+1,xmax-1))
+        iavgs = np.append(iavgs, np.mean(Intensities[r:r+3,:],0)).reshape((x+1,new_L-1))
+        savgs = np.append(savgs, np.mean(Sizes[r:r+3,:],0)).reshape((x+1,new_L-1))
+        navgs = np.append(navgs, np.mean(Numbers[r:r+3,:],0)).reshape((x+1,new_L-1))
         temptitle = Headers[x*3]
         Havgs = np.append(Havgs, temptitle[:-2])
         
-        fig, ax1 = plt.subplots(1, 1)
+        # create a dual plot of each averaged dataset, both numbers and sizes
+        
+        fig, (ax1, ax2) = plt.subplots(2,1)
     
-        ax1.semilogx(xavgs[x,:], yavgs[x,:])
+        # Plot Size data
+        ax1.semilogx(savgs[x,:], iavgs[x,:])
         ax1.set_xscale('log')
-        ax1.set_title(Havgs[x])
-        ax1.set_ylabel(yl)
+        ax1.set_ylabel('Size Measured by Intensity')
         ax1.set_xlabel('Diameter (nm)')
-        fig.savefig(Havgs[x] + ender + ".png")
+
+        # Plot Number data
+        ax2.semilogx(savgs[x,:], navgs[x,:])
+        ax2.set_xscale('log')
+        ax2.set_ylabel('Size Measured by Number')
+        ax2.set_xlabel('Diameter (nm)')
+
+        fig.suptitle(Havgs[x])
+        fig.savefig(Havgs[x] + "_I_and_N.png")
         
 else:
     CleanHeaders = []
-    for x in range(0,H):
-        temptitle = Headers[x]
-        CleanHeaders = np.append(CleanHeaders, temptitle[:-2])
-        
-        fig, ax1 = plt.subplots(1, 1)
+    t = H
     
-        ax1.semilogx(Xdata[x,:], Ydata[x,:])
+    for x in range(0,H):
+        
+        # create a dual plot of each averaged dataset, both numbers and sizes
+        
+        fig, (ax1, ax2) = plt.subplots(2,1)
+    
+        # Plot Size data
+        ax1.semilogx(Sizes[x,:], Intensities[x,:])
         ax1.set_xscale('log')
-        ax1.set_title(CleanHeaders[x])
-        ax1.set_ylabel(yl)
+        ax1.set_ylabel('Size Measured by Intensity')
         ax1.set_xlabel('Diameter (nm)')
-        fig.savefig(CleanHeaders[x] + ender + ".png")
+
+        # Plot Number data
+        ax2.semilogx(Sizes[x,:], Numbers[x,:])
+        ax2.set_xscale('log')
+        ax2.set_ylabel('Size Measured by Number')
+        ax2.set_xlabel('Diameter (nm)')
+
+        fig.suptitle(Headers[x])
+        fig.savefig(Headers[x] + "_I_and_N.png")
     
 """ Plot all lines together """
  
-fig, ax1 = plt.subplots(1, 1)
+figN, axN = plt.subplots(1, 1)
+figI, axI = plt.subplots(1, 1)
 
-fig.set_size_inches(8, 4)
+figN.set_size_inches(8, 4)
+figI.set_size_inches(8, 4)
 
 if AverageDatainTriplicates == True:
-    evenly_spaced_interval = np.linspace(0, 1, t-1)
+    evenly_spaced_interval = np.linspace(0, 1, t)
     colors = [plt.cm.viridis(x) for x in evenly_spaced_interval]
 
-    for x in range(0,t-1):
-        ax1.semilogx(xavgs[x,:], yavgs[x,:], color = colors[x], label = Havgs[x])
-        ax1.set_xscale('log')
+    for x in range(0,t):
+        axN.semilogx(savgs[x,:], navgs[x,:], color = colors[x], label = Havgs[x])
+        axN.set_xscale('log')
+        axI.semilogx(savgs[x,:], iavgs[x,:], color = colors[x], label = Havgs[x])
+        axI.set_xscale('log')
+        
+        print()
     
-    ax1.set_ylabel(yl)
-    ax1.set_xlabel('Diameter (nm)')
-    ax1.set_title("Cumulative DLS Data")
-    ax1.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
-    plt.tight_layout()
-    fig.savefig("Cumulative" + ender + ".png")
+    axN.set_ylabel('Size Measured by Number')
+    axN.set_xlabel('Diameter (nm)')
+    axN.set_title("Cumulative DLS Size by Number")
+    axN.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
+    figN.tight_layout()
+    figN.savefig("Cumulative_Averaged_N" + ".png")
+    
+    axI.set_ylabel('Size Measured by Intensity')
+    axI.set_xlabel('Diameter (nm)')
+    axI.set_title("Cumulative DLS Size by Intensity")
+    axI.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
+    figI.tight_layout()
+    figI.savefig("Cumulative_Averaged_I" + ".png")
 
 else:
-    evenly_spaced_interval = np.linspace(0, 1, H-1)
+    evenly_spaced_interval = np.linspace(0, 1, H)
     colors = [plt.cm.viridis(x) for x in evenly_spaced_interval]
 
-    for x in range(0,H-1):
-        ax1.semilogx(Xdata[x,:], Ydata[x,:], color = colors[x], label = CleanHeaders[x])
-        ax1.set_xscale('log')
+    for x in range(0,t):
+        axN.semilogx(Sizes[x,:], Numbers[x,:], color = colors[x], label = Headers[x])
+        axN.set_xscale('log')
+        axI.semilogx(Sizes[x,:], Intensities[x,:], color = colors[x], label = Headers[x])
+        axI.set_xscale('log')
+        
+        print("x = " + str(x))
+        print("Header = " + Headers[x])
     
-    ax1.set_ylabel(yl)
-    ax1.set_xlabel('Diameter (nm)')
-    ax1.set_title("Cumulative DLS Data")
-    ax1.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
-    plt.tight_layout()
-    fig.savefig("Cumulative" + ender + ".png")
+    axN.set_ylabel('Size Measured by Number')
+    axN.set_xlabel('Diameter (nm)')
+    axN.set_title("Cumulative DLS Size by Number")
+    axN.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
+    figN.tight_layout()
+    figN.savefig("Cumulative_N" + ".png")
     
+    axI.set_ylabel('Size Measured by Intensity')
+    axI.set_xlabel('Diameter (nm)')
+    axI.set_title("Cumulative DLS Size by Intensity")
+    axI.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
+    figI.tight_layout()
+    figI.savefig("Cumulative_I" + ".png")
 
         
