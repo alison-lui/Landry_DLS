@@ -86,13 +86,13 @@ if AverageDatainTriplicates == True:
         # Plot Size data
         ax1.semilogx(savgs[x,:], iavgs[x,:])
         ax1.set_xscale('log')
-        ax1.set_ylabel('Size Measured by Intensity')
+        ax1.set_ylabel('Size by Intensity')
         ax1.set_xlabel('Diameter (nm)')
 
         # Plot Number data
         ax2.semilogx(savgs[x,:], navgs[x,:])
         ax2.set_xscale('log')
-        ax2.set_ylabel('Size Measured by Number')
+        ax2.set_ylabel('Size by Number')
         ax2.set_xlabel('Diameter (nm)')
 
         fig.suptitle(Havgs[x])
@@ -111,13 +111,13 @@ else:
         # Plot Size data
         ax1.semilogx(Sizes[x,:], Intensities[x,:])
         ax1.set_xscale('log')
-        ax1.set_ylabel('Size Measured by Intensity')
+        ax1.set_ylabel('Size by Intensity')
         ax1.set_xlabel('Diameter (nm)')
 
         # Plot Number data
         ax2.semilogx(Sizes[x,:], Numbers[x,:])
         ax2.set_xscale('log')
-        ax2.set_ylabel('Size Measured by Number')
+        ax2.set_ylabel('Size by Number')
         ax2.set_xlabel('Diameter (nm)')
 
         fig.suptitle(Headers[x])
@@ -143,14 +143,14 @@ if AverageDatainTriplicates == True:
         
         print()
     
-    axN.set_ylabel('Size Measured by Number')
+    axN.set_ylabel('Size by Number')
     axN.set_xlabel('Diameter (nm)')
     axN.set_title("Cumulative DLS Size by Number")
     axN.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
     figN.tight_layout()
     figN.savefig("Cumulative_Averaged_N" + ".png")
     
-    axI.set_ylabel('Size Measured by Intensity')
+    axI.set_ylabel('Size by Intensity')
     axI.set_xlabel('Diameter (nm)')
     axI.set_title("Cumulative DLS Size by Intensity")
     axI.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
@@ -170,14 +170,14 @@ else:
         print("x = " + str(x))
         print("Header = " + Headers[x])
     
-    axN.set_ylabel('Size Measured by Number')
+    axN.set_ylabel('Size by Number')
     axN.set_xlabel('Diameter (nm)')
     axN.set_title("Cumulative DLS Size by Number")
     axN.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
     figN.tight_layout()
     figN.savefig("Cumulative_N" + ".png")
     
-    axI.set_ylabel('Size Measured by Intensity')
+    axI.set_ylabel('Size by Intensity')
     axI.set_xlabel('Diameter (nm)')
     axI.set_title("Cumulative DLS Size by Intensity")
     axI.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
