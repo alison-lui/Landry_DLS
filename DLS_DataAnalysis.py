@@ -14,7 +14,7 @@ You must specify if you're plotting either DLS data taken by Size or by Number.
 workingdir = r"C:\Users\Darwin\Documents\Alison\AL Data\B2P41"
 fname = r"C:\Users\Darwin\Documents\Alison\AL Data\B2P41\20210901_Liposomesfrom345_Combined.xlsx"
 sheetname = r"Sheet1"
-AverageDatainTriplicates = True
+AverageDatainTriplicates = False
 
 #####################################################
 #####################################################
@@ -143,14 +143,14 @@ if AverageDatainTriplicates == True:
         
         print()
     
-    axN.set_ylabel('Size by Number')
+    axN.set_ylabel('Size Measured by Number')
     axN.set_xlabel('Diameter (nm)')
     axN.set_title("Cumulative DLS Size by Number")
     axN.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
     figN.tight_layout()
     figN.savefig("Cumulative_Averaged_N" + ".png")
     
-    axI.set_ylabel('Size by Intensity')
+    axI.set_ylabel('Size Measured by Intensity')
     axI.set_xlabel('Diameter (nm)')
     axI.set_title("Cumulative DLS Size by Intensity")
     axI.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
@@ -167,8 +167,8 @@ else:
         axI.semilogx(Sizes[x,:], Intensities[x,:], color = colors[x], label = Headers[x])
         axI.set_xscale('log')
         
-        print("x = " + str(x))
-        print("Header = " + Headers[x])
+        #print("x = " + str(x))
+        #print("Header = " + Headers[x])
     
     axN.set_ylabel('Size by Number')
     axN.set_xlabel('Diameter (nm)')
