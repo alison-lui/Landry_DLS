@@ -11,10 +11,10 @@ You must specify if you're plotting either DLS data taken by Size or by Number.
 
 """ Start by changing the following parameters """
 
-workingdir = r"C:\Users\Darwin\Documents\Alison\AL Data\B2P41"
-fname = r"C:\Users\Darwin\Documents\Alison\AL Data\B2P41\20210901_Liposomesfrom345_Combined.xlsx"
+workingdir = r"C:\Users\sunsh\Documents\AL Data\B2P41_qPCR_Liposomes_adding_Triton_X-100\Liposomes 2nd purification\DLS - 345 combination"
+fname = r"C:\Users\sunsh\Documents\AL Data\B2P41_qPCR_Liposomes_adding_Triton_X-100\Liposomes 2nd purification\DLS - 345 combination\20210901_Liposomesfrom345_Combined.xlsx"
 sheetname = r"Sheet1"
-AverageDatainTriplicates = False
+AverageDatainTriplicates = True
 
 #####################################################
 #####################################################
