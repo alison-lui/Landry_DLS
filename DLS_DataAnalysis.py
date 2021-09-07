@@ -2,7 +2,7 @@
 """
 Created on Fri Aug 27 12:55:52 2021
 
-@author: Alison Lui
+@author: Alison Lui and Francis
 
 Read an excel file of data from the Landry DLS machine and plot Semilog graphs. Make one graph for each of the triplicated experiments and one for the cumulative work.
 You must specify if you're plotting either DLS data taken by Size or by Number.
