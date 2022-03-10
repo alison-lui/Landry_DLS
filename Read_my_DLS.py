@@ -5,7 +5,7 @@ Created on Fri Aug 27 12:55:52 2021
 @author: Alison Lui
 
 Read an excel file of data from the Landry DLS machine and plot Semilog graphs. Make one graph for each of the triplicated experiments and one for the cumulative work.
-You must specify if you're plotting either DLS data taken by Size or by Number.
+Plots both by Intensity and by Number.
 """
 
 
@@ -14,7 +14,7 @@ You must specify if you're plotting either DLS data taken by Size or by Number.
 workingdir = r"C:\Users\Darwin\Documents\Alison\AL Data\B2P41"
 fname = r"C:\Users\Darwin\Documents\Alison\AL Data\B2P41\20210901_Liposomesfrom345_Combined.xlsx"
 sheetname = r"Sheet1"
-AverageDatainTriplicates = False
+AverageDatainTriplicates = True
 
 #####################################################
 #####################################################
