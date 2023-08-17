@@ -1,0 +1,5 @@
+# ignore this file
+.DS_Store
+
+# ignore this folder of data and plots
+data/
